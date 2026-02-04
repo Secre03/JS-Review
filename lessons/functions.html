@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>functions</title>
+</head>
+<body>
+    <script>
+
+        //function declaration
+        function greetUser(name){
+            console.log(`Hello, ${name}`);
+        }
+        greetUser('Alice');
+
+
+        function multiply(a, b){
+            return a * b;
+        }
+        console.log(multiply(4, 5));
+
+
+        function isEven(num){
+            let result = ''
+            if(num % 2 === 0){
+                result = 'Even';
+            } else {
+                result = 'Odd';
+            }
+            return result;
+        }
+        console.log(isEven(10));
+
+        //Arrow function
+        const minTosec = (minutes) => {
+            return minutes * 60;
+        }
+        console.log(minTosec(5));
+
+        function getLarger(num1, num2){
+            if(num1 > num2){
+                return num1;
+            }else{
+                return num2;
+            }
+        }
+        console.log(getLarger(2, 3));
+        
+        //7a.
+        function greet(name){
+            if(!name){
+                console.log('Hi There!')
+            }else{
+                console.log(`Hello ${name}`)
+            }
+        }
+        greet('Mark');
+
+        function convertToFarenheight(celcius){
+            let farenheight = (celcius * 9/5) + 32;
+            return farenheight;   
+        }
+        console.log(convertToFarenheight(25));
+       
+        function convertToCelcius(farenheight){
+            let celcius = (farenheight - 32) * 5/9;
+            return celcius;
+        }
+        console.log(convertToCelcius(86));
+
+        function convertTemperature(degress, unit){
+            let temperature = '';
+            if(unit === 'C'){
+                unit = 'F';
+                let farenheight = (degress * 9/5) + 32;
+                temperature = farenheight.toString() + unit;
+                return temperature;
+            }else{
+                unit = 'C';
+                let celcius = (degress - 32) * 5/9;
+                temperature = celcius.toString() + unit;
+                return temperature;
+            }
+        }
+        console.log(convertTemperature(86, 'F'));
+
+        function convertLength(length, unit, to){
+            let total = 0;
+
+            if(unit === 'miles' && to === 'km'){
+                total = Math.round(length * 1.6);
+                total.toString() + '' + to;
+                
+            }else if(unit === 'km' && to === 'miles'){
+                total = Math.round(length * 0.621371);
+                total.toString() + '' + to;
+            }else if(unit === 'miles' && to === 'ft'){
+                total = Math.round(length * 5280);
+                total.toString() + '' + to;
+            }else if(unit === 'km' && to === 'ft'){
+                total = Math.round(length * 3281);
+                total.toString() + '' + to;
+            }else{
+                return `Invalid unit: ${unit}`;
+            }
+            return total;
+        }
+        console.log(convertLength(5, 'miles', 'km'));
+        console.log(convertLength(5, 'miles', 'ft'));
+        console.log(convertLength(5, 'km', 'ft'));
+
+        const isEven2 = num => num % 2 === 0;
+        console.log(isEven2(4));
+        console.log(isEven2(7));
+
+        
+    </script>
+</body>
+</html>

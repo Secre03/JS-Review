@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: rgb(23, 23, 23);
+      color: white;
+    }
+    button {
+      cursor: pointer;
+    }
+    .move-icon {
+      height: 55px;
+    }
+    .btn-icon {
+      background-color: transparent;
+      padding: 30px;
+      border: 3px solid white;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .move-icon-result img {
+      height: 50px;
+    }
+    .Reset,
+    .auto-play {
+      border: none;
+      padding: 10px 20px;
+      margin-top: 20px;
+      font-size: 16px;
+      border-radius: 50px;
+      font-weight: 700;
+      transition: 0.3s ease;
+      margin-right: 20px;
+    }
+    .Reset {
+      color: white;
+      border: 2px solid;
+      background-color: rgb(23, 23, 23);
+    }
+    .Reset:hover {
+      transform: scale(1.1);
+      color: black;
+      background-color: white;
+    }
+    .Reset:active {
+      opacity: 0.2;
+    }
+    .auto-play {
+      color: white;
+      border: 2px solid;
+      background-color: rgb(23, 23, 23);
+    }
+    .auto-play:hover {
+      transform: scale(1.1);
+    }
+    .stop {
+      background-color: red;
+    }
+    .confirm {
+    
+      display: none;
+    }
+  </style>
+  <body>
+    <h1>Rock, Paper, Scissors</h1>
+
+    <button class="btn-icon js-btn1">
+      <img src="img/rock-emoji.png" class="move-icon" />
+    </button>
+    <button class="btn-icon js-btn2">
+      <img src="img/paper-emoji.png" class="move-icon" />
+    </button>
+    <button class="btn-icon js-btn3">
+      <img src="img/scissors-emoji.png" class="move-icon" />
+    </button>
+
+    <p class="js-result"></p>
+    <p class="js-move move-icon-result"></p>
+    <p class="js-score"></p>
+
+    <button class="Reset reset-js">Reset Score</button>
+    <p class="confirm js-confirm">
+      Are you sure you want to reset the score?
+      <button class="yes">yes</button>
+      <button class="no">no</button>
+    </p>
+    <button class="auto-play auto-play-js">Auto Play</button>
+
+    <script>
+      document.querySelector(".js-btn1").addEventListener("click", () => {
+        playerGame("rock");
+      });
+      document.querySelector(".js-btn2").addEventListener("click", () => {
+        playerGame("paper");
+      });
+      document.querySelector(".js-btn3").addEventListener("click", () => {
+        playerGame("scissors");
+      });
+      document.querySelector(".reset-js").addEventListener("click", () => {
+        resetScore();
+      });
+      document.querySelector(".auto-play-js").addEventListener("click", () => {
+        autoPlay();
+      });
+
+      document.body.addEventListener("keydown", (e) => {
+        if (e.key === "r") {
+          playerGame("rock");
+        } else if (e.key === "p") {
+          playerGame("paper");
+        } else if (e.key === "s") {
+          playerGame("scissors");
+        } else if (e.key === "Backspace") {
+          resetScore();
+        } else if (e.key === " ") {
+          autoPlay();
+        }
+      });
+
+      const score = JSON.parse(localStorage.getItem("score")) || {
+        win: 0,
+        tie: 0,
+        lose: 0,
+      };
+      updateScore();
+
+      let interval;
+      function autoPlay() {
+        const autoPlayBtn = document.querySelector(".auto-play-js");
+        if (autoPlayBtn.innerHTML === "Auto Play") {
+          autoPlayBtn.innerHTML = "Stop";
+          autoPlayBtn.classList.add("stop");
+          interval = setInterval(() => {
+            const moves = computerGame(Math.random());
+            playerGame(moves);
+          }, 1000);
+        } else {
+          autoPlayBtn.innerHTML = "Auto Play";
+          autoPlayBtn.classList.remove("stop");
+          clearInterval(interval);
+        }
+      }
+
+      function playerGame(moves) {
+        let randomNum = Math.random();
+        let computerMoves = computerGame(randomNum);
+        let result = "";
+
+        if (moves === "rock") {
+          if (computerMoves === "rock") {
+            result = "Ties";
+          } else if (computerMoves === "paper") {
+            result = "You Lose";
+          } else {
+            result = "You Win";
+          }
+        } else if (moves === "paper") {
+          if (computerMoves === "paper") {
+            result = "Ties";
+          } else if (computerMoves === "scissors") {
+            result = "You Lose";
+          } else {
+            result = "You Win";
+          }
+        } else {
+          if (computerMoves === "scissors") {
+            result = "Ties";
+          } else if (computerMoves === "rock") {
+            result = "You Lose";
+          } else {
+            result = "You Win";
+          }
+        }
+        scoreResult(result);
+        updateScore();
+        //             alert(`You choose: ${moves}, Computer choose: ${computerMoves}, ${result}
+        // Win: ${score.win} Lose: ${score.lose} Tie: ${score.tie}`);
+        displayResult(result, moves, computerMoves);
+
+        localStorage.setItem("score", JSON.stringify(score));
+      }
+
+      function displayResult(result, moves, computerMoves) {
+        document.querySelector(".js-result").innerHTML = `${result}`;
+        document.querySelector(".js-move").innerHTML =
+          `You <img src="img/${moves}-emoji.png"> <img src="img/${computerMoves}-emoji.png"> Computer`;
+      }
+      function updateScore() {
+        document.querySelector(".js-score").innerHTML =
+          `Wins: ${score.win}, Lose: ${score.lose}, Ties: ${score.tie}`;
+      }
+
+      function scoreResult(result) {
+        if (result === "You Win") {
+          score.win += 1;
+        } else if (result === "You Lose") {
+          score.lose += 1;
+        } else {
+          score.tie += 1;
+        }
+      }
+      const confirmReset = document.querySelector(".js-confirm");
+      const yesBtn = document.querySelector(".yes");
+      const noBtn = document.querySelector(".no");
+      function resetScore() {
+        confirmReset.classList.remove("confirm");
+      }
+      yesBtn.addEventListener("click", () => {
+        score.win = 0;
+        score.lose = 0;
+        score.tie = 0;
+        localStorage.removeItem("score");
+        alert("Score Was Reset");
+        updateScore();
+        confirmReset.classList.add("confirm");
+      });
+      noBtn.addEventListener("click", () => {
+        confirmReset.classList.add("confirm");
+      });
+
+
+      function computerGame(randomNum) {
+        let computerMoves = "";
+        if (randomNum < 1 / 3) {
+          computerMoves = "rock";
+        } else if (randomNum < 2 / 3) {
+          computerMoves = "paper";
+        } else {
+          computerMoves = "scissors";
+        }
+        return computerMoves;
+      }
+    </script>
+  </body>
+</html>

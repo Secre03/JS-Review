@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Ternary and Logical Operators</title>
+</head>
+<body>
+   <script>
+      // ternay operator
+      //using  ternary operator we can save it in a variable
+      const result = true ? 'truthty' : 'falsy';
+      console.log(result);
+
+      //guard operator
+      //guard operator is just like a shortcut for if statement
+
+      false && console.log('this is falsy');
+      true && console.log('this is truthy');
+
+      const message = false && 'hello';
+      console.log(message); 
+      // it will print false because the first operand is false is the fist one is true it will print the hello
+           
+      // Or operator
+      // it will return the first truthy value
+      const currency = 'USD' || 'EUR';
+      console.log(currency); 
+      // it will print USD because it is the first truthy value if the firsty value is false the operation will continue to the second operand
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrow Function</title>
+</head>
+<body>
+    <script>
+       const regularFunc = function () {
+        console.log(1+2);
+       }
+       regularFunc();
+
+       const arrowFunction = () => {//a shorter version of function but the diferrence this one does not support hoisting
+        console.log(1+2);
+       }
+       arrowFunction();
+       // shortcuts
+       const oneParam = param => { // if one parameter only you can remove the parenthesis
+        console.log(param);
+       }
+       oneParam(2+3);
+
+       const oneLine = () => 2+3 // if the function is only returning a value u should use this shortcut it automatically return the value of 2+3
+       console.log(oneLine());
+
+       //Exercise
+       console.log('EXERCISE')
+       const multiply = (num1, num2) => num1 * num2;
+       console.log(multiply(2, 3));
+       console.log(multiply(7, 10));
+       
+       const countPositive = (nums) => {
+        let count = 0;
+        nums.forEach((num) =>{
+            if(num >= 0) count++;
+        })
+        return count;
+       }
+       console.log(countPositive([1, -2, -3, 3]));
+
+       const addNum = (array, num) => {
+        const result = array.map(array => array + num);
+        return result
+       }
+       console.log(addNum([1, 2, 3], 2));
+       console.log(addNum([-2, -1, 0, 99], 2));
+
+       const removeEgg = (foods) => {
+        let count = 0
+        const result = foods.filter(food => {
+            if (food === 'egg' && count < 2){
+                count++;
+                return false
+            }else{
+                return true;
+            }
+        })
+        return result; 
+       }
+       console.log(removeEgg(['egg', 'apple', 'egg', 'egg', 'ham']));
+    </script>
+</body>
+</html>

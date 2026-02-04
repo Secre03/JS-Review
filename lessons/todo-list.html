@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do List</title>
+</head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+    }
+</style>
+<body>
+
+    <div class="container">
+        <p>Simple todo-list 😊</p>
+
+        <div>
+        <div class="input-container">
+            <input class="task" type="text" placeholder="Input a Task">
+            <input class="date" type="date">
+        </div>
+        
+        <button class="add">Add</button>
+        <button class="clear">Clear task</button>
+        <div class="display"></div>
+        </div>
+    </div>
+
+    <script>
+        let inputs = JSON.parse(localStorage.getItem('inputTask')) || [];
+        const add = document.querySelector('.add');
+        add.addEventListener('click', () => {
+            getValue(); 
+            console.log(inputs)
+        });
+
+        getTodo();
+        function getValue(){
+            const taskVal = document.querySelector('.task');
+            const task = taskVal.value
+            const dateVal = document.querySelector('.date');
+            const date = dateVal.value;
+            if(task === '' || date === '') {
+                alert('Please fill in both fields');
+                return;
+            }
+           inputs.push({
+            task,
+            date
+           })
+           
+           taskVal.value = '';
+           dateVal.value = '';
+           getTodo();
+        }
+        function getTodo(){
+            let getHTML = ''
+           inputs.forEach((objects, index) => {
+            const {task, date} = objects;
+            
+             const html = `<div class="taskBox">
+                        <p class="taskInner">${task}</p>
+                        <p class="dateInner">${date}</p>
+                        
+                        <button class="delete js-delete">Delete</button>
+                    </div>`;
+                getHTML += html;
+           })
+            document.querySelector('.display').innerHTML = getHTML;
+            
+           document.querySelectorAll('.js-delete').forEach((deleteBtn, index) => {
+            deleteBtn.addEventListener('click', () => {
+                inputs.splice(index, 1);
+                localStorage.setItem('inputTask', JSON.stringify(inputs));
+                getTodo();
+            })
+           })
+        }
+        document.querySelector('.clear').addEventListener('click', () => {
+           const result = confirm('Are you sure you want to delete all your task?');
+           if(result){
+            inputs = [];
+            localStorage.removeItem('inputTask');
+            getTodo();
+           };
+        })
+        
+    </script>
+</body>
+</html>

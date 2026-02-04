@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>If statement</title>
+    <style>
+        .display{
+           opacity: 0;
+        }
+        .show{
+            opacity: 1;
+        }
+    </style>
+
+</head>
+<body>
+    <p class="display">Total Cart: <span id="cartQuantity">0</span></p>
+    <button onclick="CartQuantity('Show')">Show Qunatity</button>
+    <button onclick="CartQuantity('Add')">Add to cart</button>
+    <button onclick="CartQuantity('+2')">+2</button>
+    <button onclick="CartQuantity('+3')">+3</button>
+
+    <button onclick="RemoveQuantity('Reset')">Reset Cart</button>
+    <button onclick="RemoveQuantity('-2')">-2</button>
+    <button onclick="RemoveQuantity('-3')">-3</button>
+
+
+    <script>
+        //6a
+        const hour = new Date().getHours();
+        if (hour >= 6 && hour <= 12){
+            console.log('Good Morning');
+        }else if(hour > 12 && hour <= 17){
+            console.log('Good Afternoon');
+        }else{
+            console.log('Good Evening');
+        }
+        //6c.
+        const name = 'Mark';
+
+        if(name){
+            console.log(`Hello, ${name}`);
+        }
+        name && console.log(`Hello, ${name}`); // shortcut for the if statement above
+
+        //6d.
+        const isHoliday = false;
+        const age = 2;
+
+        if((age <= 6 || age >= 67) && !isHoliday){
+            console.log('Discounted');
+        }else{
+            console.log('Full Price');  
+        }
+
+        //6f.
+        const randomNum = Math.random();
+        console.log(randomNum);
+        let reault = '';
+        const guess = 'heads';
+
+        if(randomNum < 0.5){
+            result = 'heads';
+        }else{
+            result = 'tails';
+        }
+        guess === result ? console.log('You win!') : console.log('You lose!');  
+        
+        let cart = 0
+
+        function CartQuantity(moves){
+            
+            if(moves === 'Show'){
+                console.log(`Total Cart: ${cart}`);
+                document.querySelector('.display').classList.add('show');
+                document.getElementById('cartQuantity').innerText = cart;
+
+                setTimeout(() => {
+                    document.querySelector('.display').classList.remove('show');
+                }, 2000);
+
+            }else if(moves === 'Add'){
+                cart >= 10? console.log('max') : cart += 1;
+                console.log('Added to cart');
+                console.log(cart);
+
+
+            }else if(moves === '+2'){
+                if (cart > 10){
+                    console.log('max');
+                    cart = 10;
+                console.log(cart);
+                }else{
+                    cart += 2;
+                    console.log(cart);
+                
+                }
+            
+            }else if(moves === '+3'){
+                if (cart > 10){     
+                    console.log('max');
+                    cart = 10;
+                    console.log(cart);
+                }else{
+                    cart += 2;
+                    console.log(cart);
+                
+                }
+            }   
+            RemoveQuantity(moves);
+            
+        }
+
+        function RemoveQuantity(moves){
+            if(moves === 'Reset'){
+                cart = 0;
+                console.log('The cart was Reset!')
+
+            }else if(moves === '-2'){
+               if(cart < 2 ){
+                cart = 0;
+                   alert('Cart is empty');
+                }else{
+                    cart -= 2;
+                    console.log(cart);
+                }
+            }else if(moves === '-3'){
+                if(cart < 3 ){ 
+                    cart = 0;
+                    alert('Cart is empty');
+                 }else{
+                     cart -= 3;
+                     console.log(cart);
+                 }
+                }
+        }
+        
+
+    </script>
+</body>
+</html>

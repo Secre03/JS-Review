@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dom-Practice</title>
+</head>
+<style>
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    button{
+        cursor: pointer;
+    }
+    .subscribe-btn{
+        border: none;
+        color: white;
+        background-color: black;
+        padding: 10px 20px;
+        font-weight: 700;
+        font-size: 15px;
+        border-radius: 20px;
+    }
+    .subscribed-btn{
+        color: black;
+        background-color: white;
+    }
+
+</style>
+<body>
+    <p>
+        Youtube Subscribe Button
+    </p>
+    <button class="js-button subscribe-btn" onclick="button()">Subscribe</button>
+
+    <p>Amazon Shipping Calculato</p>
+    <p>Orders under $40 = +$10 shipping.</p>
+    <p>Orders over $40 = Free shipping.</p>
+
+    <input type="number" class="js-calculate" placeholder="Cost of order" onkeydown="handlekey(event)">
+    <button onclick="calculate()">Calculate</button>
+    <div class="total-price"></div>
+
+
+    <p id="text">Hello Word</p>
+    <button id="click">Click me</button>
+
+    <p>
+        <input type="text" id="js-input" placeholder="type here..">
+        <button id="click2">Show</button>
+        <p id="js-display-input">input text will display here..</p>
+    </p>
+
+    <p id="color-text">Change my color</p>
+    <button id="change-color">Change</button>
+
+
+    <br>
+    <br>
+   <p>
+        <input type="number" id="checker" placeholder="enter a num">
+        <button id="checkBtn">Check</button>
+
+        <p id="result2">Result</p>
+   </p>
+
+   <p>
+    <p id="secret">This is secret message</p>
+    <button id="toggle1">Hide</button>
+
+   </p>
+
+
+    <script src="dom.js"></script>
+</body>
+</html>

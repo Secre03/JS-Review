@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML CSS JS  Exercise</title>
+</head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+    }
+    .add{
+        padding: 10px 30px;
+        font-size: 18px;
+        background-color: rgb(255, 216, 20);
+        border: none;
+        border-radius: 20px;
+    }
+    .request, .schedule{
+        padding: 15px 40px;
+        font-size: 20px;
+        font-weight: 700;
+        border-radius: 7px;
+        border: none;
+    }
+    .request{
+        color: white;
+        background-color: black;
+    }
+    .schedule{
+        background-color: rgb(230, 230, 230);
+        margin-left: 20px;
+    }
+    .js-btn2{
+        background-color: rgb(230, 230, 230);
+        padding: 10px;
+        border: none;
+        font-weight: 700;
+        border-radius: 5px;
+    }
+    .OFF{
+        color: white;
+        background-color: black;
+        padding: 10px;
+        border: none;
+        font-weight: 700;
+        border-radius: 5px;
+    }
+    .btn-1, .btn-2, .btn-3{
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+    .clicked{
+        background-color: black;
+        color: white;
+    }
+    .error{
+        color: red;
+    }
+</style>
+<body>
+    <button class="add">Add to cart</button>
+    <br>
+    <p>
+        <button class="request">Request now</button>
+        <button class="schedule">Schedule for later</button>
+    </p>
+
+    <p>
+        <button class="js-btn">Test</button>
+    </p>
+    <p>
+        <button class="js-btn2">ON</button>
+    </p>
+
+    <p>
+        <button class="btn-1" onclick="clickBtn('1')">Gaming</button>
+        <button class="btn-2" onclick="clickBtn('2')">Music</button>
+        <button class="btn-3" onclick="clickBtn('3')">Tech</button>
+    </p>
+
+    <p>
+        <input class="input" type="number" placeholder="Enter a number">
+        <button onclick="calculate()">Calculate</button>
+        <p class="display"></p>
+    </p>
+    <script>    
+        let checkClass = document.querySelector('.js-btn');
+        const result = checkClass.classList.contains('js-btn'); // classList.contains is the one that checking if the element has a class on it and it will return true 
+        console.log(result);
+
+    //     const btn2 = document.querySelector('.js-btn2');
+        
+    //     btn2.addEventListener('click',()=> {
+    //     let checkClass2 = btn2.classList.contains('js-btn2');
+    //     if(checkClass2){
+    //         btn2.classList.remove('js-btn2');
+    //         btn2.classList.add('OFF');
+    //         btn2.innerHTML = 'OFF';
+    //     }else{
+    //         btn2.classList.remove('OFF');
+    //         btn2.classList.add('js-btn2');
+    //         btn2.innerHTML = 'ON';
+    //     }
+    // });
+    let toggled = true;
+    let btn1 = document.querySelector('.btn-1');   
+    let btn2 = document.querySelector('.btn-2');
+    let btn3 = document.querySelector('.btn-3');
+    
+    function clickBtn(btn){
+
+        if(toggled){
+                if(btn === '1'){
+                    btn1.classList.add('clicked');
+                    btn2.classList.remove('clicked');
+                    btn3.classList.remove('clicked');
+                }else if(btn === '2'){
+                    btn1.classList.remove('clicked');
+                    btn2.classList.add('clicked');
+                    btn3.classList.remove('clicked');
+                }else if(btn === '3'){
+                    btn1.classList.remove('clicked');
+                    btn2.classList.remove('clicked');
+                    btn3.classList.add('clicked');
+
+                }else{
+                    toggled = false;
+                }
+
+        }
+    }
+
+    let display = document.querySelector('.display')
+   function calculate(){
+    let input = document.querySelector('.input').value;
+    let inputVal = Number(input);
+    if(inputVal > 40){
+        display.innerHTML = `${inputVal} free ship`
+        display.classList.remove('error');
+    }else if(inputVal < 0){
+        display.classList.add('error');
+        display.innerHTML = 'Error no negative';
+    }else{
+        inputVal += 10;
+        display.innerHTML = `${inputVal} -10 ship`
+        display.classList.remove('error');
+    }
+   }
+    </script>
+</body>
+</html>
