@@ -1,5 +1,7 @@
 import { products } from "../data/products.js";
-import { cart } from "../data/cart.js";
+import { savedCart, AddtoCart } from "../data/cart.js";
+import { calculateCents } from "../utils/money.js";
+import { updateCartQuantity } from "../utils/updateQuantity.js";
 
 let html = "";
 products.forEach((product) => {
@@ -22,11 +24,11 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)}
+            $${calculateCents(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="js-quantity-selector" data-product-quantity="${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -55,31 +57,31 @@ products.forEach((product) => {
         </div>`;
 });
 document.querySelector(".products-grid").innerHTML = html;
+document.querySelector(".cart-quantity").innerHTML = updateCartQuantity() || '';
 
+function displayAddMessage(time, button) {
+  const addMessage = button
+    .closest(".product-container")
+    .querySelector(".added-to-cart");
+  clearTimeout(time);
+
+  addMessage.classList.add("add-msg");
+  time = setTimeout(() => {
+    addMessage.classList.remove("add-msg");
+  }, 2000);
+}
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+  let time;
   button.addEventListener("click", () => {
     const productId = button.dataset.productId;
+    const select = document.querySelector(
+      `.js-quantity-selector[data-product-quantity="${productId}"]`,
+    );
+    const selectedQuantity = parseInt(select.value);
 
-    let matchItem;
-
-    cart.forEach((item) => {
-      if (productId === item.productId) {
-        matchItem = item;
-      }
-    });
-
-    if (matchItem) {
-      matchItem.quantity += 1;
-      console.log(matchItem)
-    } else {
-      cart.push(
-        {
-          productId: productId,
-          quantity: 1
-        },
-      );
-    }
-
-    console.log(cart)
+    AddtoCart(selectedQuantity, productId);
+    document.querySelector(".cart-quantity").innerHTML = updateCartQuantity() || '';
+    // display added message
+    displayAddMessage(time, button);
   });
 });
