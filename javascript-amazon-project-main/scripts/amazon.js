@@ -1,7 +1,7 @@
 import { products } from "../data/products.js";
 import { savedCart, AddtoCart } from "../data/cart.js";
-import { calculateCents } from "../utils/money.js";
-import { updateCartQuantity } from "../utils/updateQuantity.js";
+import calculateCents from "../utils/money.js";
+import updateCartQuantity from "../utils/updateQuantity.js";
 
 let html = "";
 products.forEach((product) => {
