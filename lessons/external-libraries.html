@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
+  this is external library for dayjs -->
+  
+  <script type="module">
+    import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
+    //this is a ESM mode library for dayjs
+
+   
+    //15a
+     let daysFormat = dayjs().subtract(1, "month").format('MMMM D dddd');
+      console.log(daysFormat);
+    //15d
+    let days = '';
+    for(let i = 0; i< 7; i++){
+       let date = dayjs().add(i, 'days').format('dddd, ');
+       days += date;
+    }
+    console.log(days);
+
+    //15e
+    const isWeekend = (date) => {
+      const notWeekend = 'Not weekend';
+      const weekend = date.format('dddd');
+      if(weekend === 'Saturday' || weekend === 'Sunday'){
+        return weekend;
+      }else{
+        return notWeekend;
+      }
+    }
+    console.log(isWeekend(dayjs().add(3, 'days')));
+
+    
+
+  </script>
+</body>
+</html>
