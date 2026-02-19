@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Functions</title>
+</head>
+<body>
+    <button class="add" onclick="addBtn()">Start</button>
+    <p>
+        <button class="cart" onclick="AddCart()">Add to cart</button>
+        <p class="display"></p>
+    </p>
+    <p>
+        <button class="AddMsg">Add</button>
+        <button class="RemoveMsg">Remove</button>
+    </p>
+    <p>
+        <button class="click">Click</button>
+    </p>
+    <script>
+
+        function greeting(){
+            console.log('Hello')
+        }
+        greeting(); // this is a normal function, function is a value and we can save a value into a varibale 
+
+        const num1 = function(){// wec can remove the name of the function because its not necessary needed when 
+            console.log('Hello');// saving it into i variable this is called anonymous function
+        }
+        console.log(num1)
+        num1();// calling a varibale that has a function value 
+
+        // wecan also save a function into the property of an objects this is called method here is the example
+        const object = {
+            num: 2,
+            fun: function(){
+                console.log('function inside the object')
+            }
+        }
+        object.fun();// we can call it using dot notation
+
+        //we can also pass a function into a function in the parameter here is the example;
+
+        function example(param){
+            param();
+        }
+        example(function(){// calling the function and passing an anonymous function as an argument
+            console.log('Function passing to a function in parameter')
+        })
+
+        // Exercise
+
+        const add = function ()  {
+            console.log(2+3);
+        }
+        console.log(add)
+        console.log(add)
+
+        //12b.
+        function runTwice(fun){
+            fun();
+            fun();
+        }
+        runTwice(function(){
+            add();
+        });
+
+        //12c.
+        
+        function addBtn(){
+            const btn = document.querySelector('.add');
+            if(btn.innerHTML === 'Start'){  
+                btn.innerHTML = 'Loading...'
+                    setTimeout(()=> {
+                        btn.innerHTML ='Finised!'
+                    }, 1000)
+                    setTimeout(()=> {
+                        btn.innerHTML ='Start'
+                    }, 2000)
+            }
+        }
+
+        let time;
+        function AddCart (){
+            const display = document.querySelector('.display');
+            display.innerHTML = 'Added';
+            clearTimeout(time);
+            time = setTimeout(() => {
+                    display.innerHTML = '';
+                }, 2000);
+                
+        }
+        let count = 2;
+        setInterval(() => {
+            const title = document.title;
+            if(count <= 0){
+                document.title = 'App';
+            }else{
+                 if(title === 'App'){
+                document.title = `New Message(${count})`;
+                } else {
+                document.title = 'App';
+                }
+            }
+           
+        }, 1000);
+
+        document.querySelector('.AddMsg').addEventListener('click', () => {
+            count += 1;
+        })
+        document.querySelector('.RemoveMsg').addEventListener('click', () => {
+            if (count <= 0){
+                return count;
+            }else{
+                count -= 1;
+            }
+            
+        })
+        const check = () => {
+            console.log('clicked');
+        }
+        const btn = document.querySelector('.click');
+        
+        
+        btn.addEventListener('click', check);
+
+        // btn.removeEventListener('click', check);
+
+           btn.addEventListener('click', () => {
+            console.log('clicked2')
+        })
+        // we can also remove the event listener 
+
+        const array = [1,2,3,4,5];
+
+        array.forEach((value, index) => {
+            console.log(value);
+        }); // for each is use to loop all the array to display, update , etc but no return value
+
+        const resultFilter = array.filter((value, index) => {
+            if(value%2 === 0){
+                return true;
+            }
+            return false;
+        });
+
+        console.log(resultFilter,'filter')
+        //shorthand
+        const shortFilter = array.filter(value => value % 2 === 0);
+        console.log(shortFilter, 'shortcut');
+
+        const mapArr = array.map((value, index) => {// filter is use to loop trough array and create a copy but pass to a certain conditon and return the new array;
+
+            return value * 2;
+        });
+        console.log(mapArr, 'map');
+
+        const shorMap = array.map(value => value * 2); // map will also loop through array and create a copy and you can modify it or transform the array and return
+
+        console.log(shorMap, 'shortcut')
+    
+
+        const copy = array.slice(1,4); // create a copy of array and you can modify it on the paramiter whit start and end
+        console.log(copy);
+        
+        const cut = array.splice(0, 1);// splice will modify the original array and it will cut based on the parameter 
+        console.log(cut);
+
+    
+
+        
+    </script>
+</body>
+</html>

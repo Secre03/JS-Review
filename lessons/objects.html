@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objects</title>
+</head>
+<body>
+    <script>
+        //objects let us store multiple values like functions, arrays, and other objects etc
+
+        const person = {
+            name: 'Mark',
+            age: 16,
+            'favorite-food': 'sisig', //if the property has dash its recomend to use a '' wrap the property to use a bracket notation
+            hobby: function hobby(hobby){
+                console.log('playing online games')
+                console.log(`${hobby}`)
+            },// and also in obects we can use a function its called method
+            address: {
+                barangay: 'busay',
+                municipality: 'daraga',
+                province: 'albay'
+            }// we can also create an objects inside an objects
+        }
+        console.log(person);
+        console.log(person.name, person.age)//to acces the value in objects type the object name and add dot its property it is called dotnotation
+
+        console.log(person['favorite-food'])// it is called a bracket notaion when the property use a dash if we use a normal dot notaion the dash will become a minus so js will do math instead of accesing the value
+
+        console.log(person.hobby('sleeping'))// its called a method with a parameter
+
+        console.log(person.address.barangay, person.address.municipality, person.address.province); 
+        //if you want to access the value of the ibjects inside an objects you just call it dot after dot
+
+        Math.random()
+        console.log()// theses is the example of method the math and console is obects and random and log are function
+
+        const stringObject = JSON.stringify(person) //JSON is another objects but with less features it can not use a function but JSON is universal because almost programing language understand JSON 
+        // stringfy turns the objects in json form
+
+        console.log(stringObject); // we can see in console that the method is not showing in json form
+
+        const parsedObject = JSON.parse(stringObject) // JSON.parse is will turn back json to objects form
+        console.log(parsedObject)
+
+        localStorage.setItem('person', stringObject)// local storage is a built in objects in is it will let us save a data in a browser 
+        //setitem it will set the item in the brower it has two parameter the name of the save data and its value take note that setitem is only supported with string
+        localStorage.getItem('person');
+        //getitem is we will get now the data that we set in the browser
+        person ? 'no remove' : localStorage.removeItem('person') // it will remove the data that we set in the browser
+
+        console.log('heelo'.length) //lenght is a property of string were we can see how manny character is it
+        console.log('hello'.toUpperCase()); // to turn the string to uppercase 
+        console.log('HeLLo'.toLowerCase()) // to turn the string to lowercase
+
+    //autoboxing is when a primitive value like string, number, boolean is treated like an object so we can use method and property
+
+    //destructuring assignment
+    // the varibale has the same name as the property of the object you can use destructuring assignment to extract multiple properties from an object and assign them to variables
+    const message = {
+        text: 'hello world',
+        sender: 'Mark',
+    }
+    //intead of this
+    const text1 = message.text;
+    const sender1 = message.sender;
+    //use this
+    const {text, sender} = message; // this called destructuring assignment its a shortcut to extract multiple properties from an object and assign them to variables
+
+    console.log(text);
+    console.log(sender);
+
+    //shorthand property this is when the property has the same variable name that has assigned ex.
+    const example = {
+        //text: text, if the property the same with variable use this on bellow
+        text
+    }
+
+    //shorthand method
+
+    const example1 ={
+        method: function functionName(){
+            console.log('this is not a shorthand method');//this is a regular method
+        },
+        method() {
+        console.log('this is a shorthand method')//this is the shortcut for method in objects
+        }
+    }
+    example1.method();
+
+    //EXERCISES
+
+    const product1 = {
+        name: 'basketball',
+        price: 2095,
+        'delivery-time': '3 days'
+    }
+    const product2 = {
+        name: 'shoes',
+        price: 11095,
+        'delivery-time': '5 days'
+    }
+    console.log(product1);
+    console.log(product1.price + 500);
+
+    function comparePrice (product1, product2){
+        return product1.price < product2.price ? product1 :  product2;
+    }
+    console.log(comparePrice(product1, product2))
+    
+
+    function isSameProduct(produc1, product2){
+        return(
+            product1.name === product2.name &&
+            product1.price === product2.price &&
+            product1['delivery-time'] === product2['delivery-time']
+        );
+    }
+    function converToLowerCase(text){
+        let lowercase = text.toLowerCase();
+        return lowercase;
+    }
+    console.log(converToLowerCase('HELLO'));
+ // lowercase
+    const lowerCase = (text) => {
+        return text.toLowerCase();
+    }
+    console.log(lowerCase('Helo WORD'));
+    //repeat string
+    const repeatStr = (text) => {
+        return text.repeat(5);
+    }
+    console.log(repeatStr('Repeat\n'))
+
+    
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coinflip</title>
+</head>
+<style>
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        color: black;
+    }
+    .main-container{
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 60px;
+        margin-left: 200px;
+
+    }
+    .container{
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 40px 50px;
+        text-align: center;
+        max-width: 500px; 
+        width: 100%;
+       
+    }
+    h1{
+        margin-bottom: 50px;
+        font-weight: 900;
+        font-size: 2.3rem;
+        border: 2px solid black;
+        padding: 12px;
+    }
+    .coins{
+        font-size: 1.4rem;
+        font-weight: 700;
+    }
+    .score-board{
+       border: 2px solid black;
+       height: 140px;
+       width: 250px;
+       padding: 0px 20px;
+       
+       
+       text-align: center;
+       font-size: 14px;
+    }
+    .title-score{
+        font-weight: 700;
+        font-size: 20px;
+        margin-bottom: 10px;
+        font-variant: small-caps;
+    }
+    .winner{
+        font-weight: 700;
+        font-size: 15px;
+    }
+    .move{
+        display: flex;
+        justify-content: space-between;
+    }
+
+</style>
+
+<body>
+    <div class="main-container">
+        <div class="score-board">
+            <p class="title-score">Score board</p>
+            <p >Player Score: <span id="player-score">0</span></p>
+            <p>Computer Score: <span id="computer-score">0</span></p>
+        </div>
+
+    <div class="container">
+        <h1>Coin Flip Game</h1>
+        <p class="coins">Guess the coin: <span id="coin-result"></span></p>
+        <p class="winner">Winner is: <span id="correct-guess"></span></p>
+
+        <button onclick="coinflip('heads')" >Heads</button>
+        <button onclick="coinflip('tails')">Tails</button>
+        <div class="move">
+            <div class="player">
+                <p>You choose: <span id="player-choose"></span></p>
+                <p>Result: <span id="player-result"></span></p>
+                
+            </div>
+
+            <div class="computer">
+                <p>Computer choose: <span id="computer-choose"></span></p>
+                <p>Result: <span id="computer"></span></p>
+                
+            </div>
+        </div>
+        <p>Most Correct Guess is: <span id="most-correct"></span></p>
+        <button id="reset" onclick="resetScore()">Reset Score</button>
+        
+    </div>
+    </div>
+
+    <script>
+        let statsScore = JSON.parse(localStorage.getItem('statsScore')) || {
+            playerStatus : '',
+            playerScore : 0,
+            computerStatus : '',
+            computerScore : 0,
+        };
+        
+
+        function coinflip(playerMoves){
+            const coinResult = document.getElementById("coin-result");
+
+            const playerChoose = document.getElementById("player-choose");
+            const playerPoints = document.getElementById("player-score")
+            const playerResult = document.getElementById("player-result");
+
+            const computerChoose = document.getElementById("computer-choose");
+            const computerPoints = document.getElementById("computer-score");
+            const computerResult = document.getElementById("computer");
+
+            const correctGuess = document.getElementById("correct-guess");
+            const topCorrect = document.getElementById("most-correct")
+            
+           
+            let mostCorrectGuess = '';
+            let winner = ''
+            let computerMoves = '';
+            let computerNum = Math.random();
+
+            let correctMoves = guessMoves();
+
+            if(computerNum <= 1/2){
+                computerMoves = 'tails'
+            }else{
+                computerMoves = 'heads'
+            }
+
+
+            //player
+            if (playerMoves === 'heads' && correctMoves === 'heads'){
+                statsScore.playerStatus = 'Correct!';
+                statsScore.playerScore += 1;
+
+            }else if(playerMoves === 'tails' && correctMoves === 'tails'){
+                statsScore.playerStatus = 'Correct!';
+                statsScore.playerScore += 1;
+            }else{
+                statsScore.playerStatus = 'Wrong';
+            }
+            //computer 
+            if (computerMoves === 'heads' && correctMoves === 'heads'){
+                statsScore.computerStatus = 'Correct!';
+                statsScore.computerScore += 1;
+            }else if(computerMoves === 'tails' && correctMoves === 'tails'){
+                statsScore.computerStatus = 'Correct!';
+                statsScore.computerScore += 1;
+            }else{
+                statsScore.computerStatus = 'Wrong';
+            }
+
+            // most correct guess
+            if(statsScore.playerScore > statsScore.computerScore){
+                mostCorrectGuess = 'Player';
+            }else if(statsScore.computerScore > statsScore.playerScore){
+                mostCorrectGuess = 'Computer';
+            }else{
+                mostCorrectGuess = 'Tie';
+            }
+
+            //correct guess
+            if(statsScore.playerStatus === 'Correct!'){
+                winner = 'Player'
+            }else if(statsScore.computerStatus === 'Correct!' ){
+                winner = 'Computer'
+            }else if(statsScore.playerStatus === 'Correct!' && statsScore.computerStatus === 'Correct!' ){
+                winner = 'Tie';
+            }else{
+                winner = 'No one guessed correctly';
+            }
+
+
+            localStorage.setItem('statsScore', JSON.stringify(statsScore));
+            coinResult.innerText = correctMoves
+
+            playerChoose.innerText = playerMoves;
+            playerPoints.innerText = statsScore.playerScore;
+            playerResult.innerText = statsScore.playerStatus;
+
+            computerChoose.innerText = computerMoves;
+            computerPoints.innerText = statsScore.computerScore;
+            computerResult.innerText = statsScore.computerStatus;
+
+            correctGuess.innerText = winner;
+            topCorrect.innerText = mostCorrectGuess;
+            
+        }
+        
+        function resetScore(){
+            statsScore.playerStatus = ''
+            statsScore.playerScore = 0
+            statsScore.computerStatus = ''
+            statsScore.computerScore = 0
+            localStorage.removeItem('statsScore');
+
+            alert('The Score was reset!')
+        }
+        
+        function guessMoves(){
+            let randomNum = Math.random();
+            let result = ''
+
+            if(randomNum <= 1/2){
+                result = 'tails'
+            }else{
+                result = 'heads'
+            }
+            return result;
+        }
+
+
+    </script>
+</body>
+</html>

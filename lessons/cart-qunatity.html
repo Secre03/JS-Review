@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        Cart Quantity
+    </p>
+
+    <button onclick="CartQuantity('Show')">Show Qunatity</button>
+    <button onclick="CartQuantity('Add')">Add to cart</button>
+    <button onclick="CartQuantity('+2')">+2</button>
+    <button onclick="CartQuantity('+3')">+3</button>
+    <button onclick="CartQuantity('Reset')">Reset Cart</button>
+
+    <script>
+        let cart = 0;
+        function CartQuantity(moves){
+            switch(moves){
+                case 'Show':
+                    console.log(`Total Cart: ${cart}`);
+                    break;
+                case 'Add':
+                    cart >= 10? console.log('max') : cart += 1;
+                    console.log('Added to cart');
+                    console.log(cart);
+                    break;
+                case '+2':
+                    cart >= 10? console.log('max') : cart += 2;
+                    console.log(cart);
+                    break;
+                case '+3':
+                    cart >= 10? console.log('max') : cart += 3;
+                    console.log(cart);
+                    break;
+                case 'Reset':
+                    cart = 0;
+                    console.log('The cart was Reset!')
+                    break;
+                default: console.log('Error');
+            }
+        }
+
+    </script>
+</body>
+</html>

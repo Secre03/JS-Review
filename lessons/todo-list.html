@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do List</title>
+</head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .container{
+        box-shadow: 0px 0px 3px rgb(46, 46, 46);
+        border-radius: 20px;
+        padding: 20px;
+        background-color: antiquewhite;
+        max-width: 420px;
+        width: 100%;
+        text-align: center;
+    }
+    .title{
+        margin-bottom: 40px;
+        color: rgb(50, 47, 47);
+    }
+    .input-container{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+        text-align: left;
+        color:rgb(50, 47, 47);
+        font-size: 17px;
+        position: relative;
+    }
+    .buttons{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin-bottom: 10px;
+    }
+    .date{
+        width: 50%;
+    }
+    .task, .date{
+        padding: 13px;
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0px 0px 2px gray;
+        margin-bottom: 10px;
+    }
+    .update-task, .update-date{
+        display: none;
+    }
+    .add{
+        padding: 13px;
+        width: 63px;
+        background-color: rgb(50, 47, 47);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+        transition: 0.3s ease;
+    }
+    .add:hover{
+        transform: scale(1.1);
+        background-color: rgb(31, 29, 29);
+    }
+    .clear{
+        padding: 13px;
+        background-color: rgb(169, 5, 5);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        transition: 0.3s ease;
+    }
+    .clear:hover{
+        transform: scale(1.1);
+        background-color: rgb(131, 5, 5);
+    }  
+    .taskBox{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        align-items: center;
+        border-radius: 5px;
+        transition: 0.3s ease;
+    }
+    .taskBox:hover{
+        background-color: rgb(217, 196, 168);
+    }
+</style>
+<body>
+
+    <div class="container">
+        <h1 class="title">Simple todo-list 😊</h1>
+
+        <div class="content">
+        <div class="input-container">
+            <label for="task">Input Task📌</label>
+            <input class="task" type="text">
+            <label for="date">Input Date📅</label>
+            <input class="date" type="date">
+            <div class="buttons">
+                <button class="add">Add</button>
+                <button class="clear">Clear task</button>
+            </div>
+        </div>
+        
+        <div>
+            
+            <div class="display"></div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        let inputs = JSON.parse(localStorage.getItem('inputTask')) || [];
+        const add = document.querySelector('.add');
+        add.addEventListener('click', () => {
+            getValue(); 
+            console.log(inputs)
+        });
+
+        getTodo();
+        function getValue(){
+            const taskVal = document.querySelector('.task');
+            const task = taskVal.value
+            const dateVal = document.querySelector('.date');
+            const date = dateVal.value;
+            if(task === '' || date === '') {
+                alert('Please fill in both fields');
+                return;
+            }
+           inputs.push({
+            task,
+            date
+           })
+           localStorage.setItem('inputTask', JSON.stringify(inputs));
+           taskVal.value = '';
+           dateVal.value = '';
+           getTodo();
+        }
+        function getTodo(){
+            let getHTML = ''
+           inputs.forEach((objects, index) => {
+            const {task, date} = objects;
+            
+             const html = `<div class="taskBox">
+                        <p class="taskInner">${task}</p>
+                        <p class="dateInner">${date}</p>
+                        
+                        <button class="delete js-delete">Delete</button>
+                        <div>
+                            <button class="delete js-update">Update</button>
+                            <input class="update-task update-task-js" type="text" placeholder="update task">
+                            <input class="update-date update-date-js" type="date">
+                        </div>
+                    </div>`;
+                getHTML += html;
+           })
+            document.querySelector('.display').innerHTML = getHTML;
+            
+           document.querySelectorAll('.js-delete').forEach((deleteBtn, index) => {
+            deleteBtn.addEventListener('click', () => {
+                inputs.splice(index, 1);
+                localStorage.setItem('inputTask', JSON.stringify(inputs));
+                getTodo();
+            })
+           });
+
+           document.querySelectorAll('.js-update').forEach((updateBtn, index) => {
+            let toggle = true;
+           
+            updateBtn.addEventListener('click',() => {
+                const taskBox = updateBtn.closest('.taskBox');
+                const updateTask = taskBox.querySelector('.update-task-js');
+                const updateDate = taskBox.querySelector('.update-date-js');
+               if(toggle){
+                updateTask.classList.remove('update-task');
+                updateDate.classList.remove('update-date');
+                toggle = false
+               }else{
+                const newTask = updateTask.value;
+                const newDate = updateDate.value;
+                
+                if(newTask === '' || newDate === ''){
+                    alert('Please fill all form');
+                    return
+                }
+                inputs[index].task = newTask;
+                inputs[index].date = newDate;
+                localStorage.setItem('inputTask', JSON.stringify(inputs));
+                getTodo();
+               }
+            })
+           })
+        }
+        document.querySelector('.clear').addEventListener('click', () => {
+           const result = confirm('Are you sure you want to delete all your task?');
+           if(result){
+            inputs = [];
+            localStorage.removeItem('inputTask');
+            getTodo();
+           };
+        })
+        
+    </script>
+</body>
+</html>

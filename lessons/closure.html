@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Closure</title>
+</head>
+<body>
+
+  <script>
+
+    //A closure in JavaScript is when a function remembers and can access 
+    // variables from its outer scope, even after that outer function has finished running.
+    function counter(){
+      let count = 0
+      return function(){//this is inner function
+        count++// we can always acces to the count in outer function
+        console.log(count)
+      }
+    }
+    const count = counter();
+    count();//1
+    count();//2
+    count();//3
+
+    function privateData(amount){
+      let balance = 900;
+      return function(){
+        const total = amount - balance;
+        console.log(total);
+      }
+    }
+    const total = privateData(1000);
+    total();
+    let rows = 5;
+    let stars = '';
+    for(let i = 1; i<=rows; i++){
+      stars = ' ';
+
+      for(let b = 1; b <= rows - i; b++){
+        stars += ' ';
+      }
+
+      for(let c = 1; c<= 2 * i - 1; c++){
+        stars += '*';
+      }
+      console.log(stars)
+    }
+    
+
+  </script>
+</body>
+</html>
