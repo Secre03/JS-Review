@@ -1,14 +1,19 @@
 import updateCartQuantity from "../utils/updateQuantity.js";
 
-//OOP = organising our code into objects
-//(tries to represent a real world)
+//class is a better way to generate an objects in OOP
 
-function Cart(localStorageKey) {
-  const cart = {
-    cartItems: undefined,
+class Cart {
+   cartItems;
+   localStorageKey;
+
+   //everytime we generate an objects constructor will run so all the setup code we created will put in the constructor
+   constructor(localStorageKey){
+      this.localStorageKey = localStorageKey;
+      this.loadStorage();
+   }
 
     loadStorage() {
-      this.cartItems = JSON.parse(localStorage.getItem(localStorageKey));
+      this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
 
       if (!this.cartItems) {
         this.cartItems = [
@@ -24,13 +29,13 @@ function Cart(localStorageKey) {
           },
         ];
       }
-    },
+    }
 
     savedCart() {
-      localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));
-    },
+      localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    }
 
-    AddtoCart(productId, selectedQuantity) {
+     AddtoCart(productId, selectedQuantity) {
       let matchItem;
 
       this.cartItems.forEach((cartItem) => {
@@ -51,8 +56,9 @@ function Cart(localStorageKey) {
 
       this.savedCart();
       updateCartQuantity();
-    },
-    removeFromCart(productId) {
+    }
+
+     removeFromCart(productId) {
       const newCart = [];
       this.cartItems.forEach((cartItem) => {
         if (cartItem.productId !== productId) {
@@ -63,7 +69,7 @@ function Cart(localStorageKey) {
 
       this.savedCart();
       updateCartQuantity();
-    },
+    }
 
     updateDeliveryOption(productId, deliveryOptionId) {
       let matchItem;
@@ -75,18 +81,17 @@ function Cart(localStorageKey) {
       matchItem.deliveryOptionId = deliveryOptionId;
 
       this.savedCart();
-    },
-  };
+    }
 
-  return cart;
 }
 
-//instead of copy pasting the object and create a new one use function and pass it on the variable this will make a code more cleaner
-const cart = Cart("cart-oop");
-const businessCart = Cart("business-cart");
 
-cart.loadStorage();
-businessCart.loadStorage();
+const cart = new Cart('cart-oop');
+const businessCart = new Cart('business-cart');
+
 
 console.log(cart);
 console.log(businessCart);
+
+console.log(businessCart instanceof Cart); // check if the businesssCart is instance of Cart class
+
