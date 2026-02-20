@@ -4,16 +4,17 @@ import updateCartQuantity from "../utils/updateQuantity.js";
 
 class Cart {
    cartItems;
-   localStorageKey;
+   #localStorageKey; // if th e property has has on the beginning its called private property it can only be access
+   //inside the class
 
-   //everytime we generate an objects constructor will run so all the setup code we created will put in the constructor
+   //everytime we generate an objects constructor will run so all the setup code we created will be put inside the constructor
    constructor(localStorageKey){
-      this.localStorageKey = localStorageKey;
-      this.loadStorage();
+      this.#localStorageKey = localStorageKey;
+      this.#loadStorage();
    }
 
-    loadStorage() {
-      this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+    #loadStorage() {
+      this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
 
       if (!this.cartItems) {
         this.cartItems = [
@@ -32,7 +33,7 @@ class Cart {
     }
 
     savedCart() {
-      localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+      localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
     }
 
      AddtoCart(productId, selectedQuantity) {
@@ -88,6 +89,8 @@ class Cart {
 
 const cart = new Cart('cart-oop');
 const businessCart = new Cart('business-cart');
+// cart.#localStorageKey = 'asd'; if we change the property of a private it will result an error
+
 
 
 console.log(cart);
