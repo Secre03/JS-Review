@@ -59,6 +59,53 @@ class Clothing extends Product { // inherits the property of class product
 
 }
 
+// // Example of a built-in class (Date)
+// const date = new Date();
+// console.log(date.toLocaleTimeString());
+
+// // Understanding `this`
+
+// console.log(this); 
+// // In strict mode or ES modules, `this` at the top level is undefined
+
+// const object1 = {
+//   a: 2,
+//   b: this.a 
+//   // undefined because `this` here does NOT refer to object1
+// };
+
+// const object2 = {
+//   a: 2,
+
+//   getB() {
+//     return this.a;
+//   }, 
+//   // Proper way to use `this` is inside a method
+
+//   nums: [1, 2, 3],
+
+//   logWithNormalFunction() {
+//     this.nums.forEach(function (num) {
+//       console.log(this.a);
+//       // `this` here is undefined (or window in non-strict mode)
+//       // because regular functions have their own `this`
+//     });
+//   },
+
+//   logWithArrowFunction() {
+//     this.nums.forEach((num) => {
+//       console.log(this.a);
+//       // Arrow functions do NOT have their own `this`
+//       // so they inherit `this` from logWithArrowFunction → object2
+//     });
+//   }
+// };
+
+// console.log(object2.getB()); // 2
+// object2.logWithNormalFunction(); // undefined (3 times)
+// object2.logWithArrowFunction();  // 2 (3 times)
+
+
 
 export const products = [
   {
