@@ -4,7 +4,7 @@ import updateCartQuantity from "../utils/updateQuantity.js";
 
 class Cart {
    cartItems;
-   #localStorageKey; // if th e property has has on the beginning its called private property it can only be access
+   #localStorageKey; // if the property have hash on the beginning its called private property it can only be access
    //inside the class
 
    //everytime we generate an objects constructor will run so all the setup code we created will be put inside the constructor

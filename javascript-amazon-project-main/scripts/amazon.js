@@ -1,6 +1,5 @@
 import { products } from "../data/products.js";
 import { savedCart, AddtoCart } from "../data/cart.js";
-import calculateCents from "../utils/money.js";
 import updateCartQuantity from "../utils/updateQuantity.js";
 
 let html = "";
@@ -17,14 +16,14 @@ products.forEach((product) => {
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars * 10}.png">
+              src="${product.getStarURL()}">
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${calculateCents(product.priceCents)}
+            ${product.getPrice()}
           </div>
 
           <div class="product-quantity-container">
@@ -79,7 +78,7 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     );
     const selectedQuantity = parseInt(select.value);
 
-    AddtoCart(selectedQuantity, productId);
+    AddtoCart(productId, selectedQuantity);
     document.querySelector(".cart-quantity").innerHTML = updateCartQuantity() || '';
     // display added message
     displayAddMessage(time, button);

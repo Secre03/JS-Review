@@ -27,10 +27,15 @@ export function renderOrderSummary() {
   cart.forEach(cartItem => {
     const productId = cartItem.productId;
     const matchItem = getProduct(productId);
-
+    if (!matchItem) {
+  console.error("Product not found for cart item:", productId);
+  return; // skip this cart item
+}
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
-    const dateString = calculateDeliverdate(deliveryOption)
+    const dateString = calculateDeliverdate(deliveryOption);
+
+    console.log(matchItem.getPrice())
 
     checkoutHTML += `
   <div class="cart-item-container 
@@ -49,7 +54,7 @@ export function renderOrderSummary() {
                   ${matchItem.name}
                 </div>
                 <div class="product-price">
-                  $${calculateCents(matchItem.priceCents)}
+                  ${matchItem.getPrice()}
                 </div>
                 <div class="product-quantity js-product-quantity-${matchItem.id}">
                   <span>
