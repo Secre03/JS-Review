@@ -26,6 +26,7 @@ class Product {
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
   }
+  
 
   getStarURL() {
     return `images/ratings/rating-${this.rating.stars * 10}.png`;
@@ -33,6 +34,27 @@ class Product {
 
   getPrice(){
     return ` $${calculateCents(this.priceCents)}`;
+  }
+
+   extraInfoHTML(){
+    return '';
+  }
+
+}
+
+class Clothing extends Product { // inherits the property of class product
+
+  sizeChartLink;
+
+  constructor(productDetails){
+    super(productDetails);// inherits the constructor
+    this.sizeChartLink = productDetails.sizeChartLink
+  }
+
+  extraInfoHTML(){// we overide the method of the parent class we return a value of link
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">Size chart</a>
+    `;
   }
 
 }
@@ -697,6 +719,12 @@ export const products = [
       "mens"
     ]
   }
-].map(productDetails => new Product(productDetails));
+].map(productDetails => {
+  if(productDetails.type === 'clothing'){
+    return new Clothing(productDetails);
+  }else{
+    return new Product(productDetails);
+  }
+});
 
 // console.log(products);
