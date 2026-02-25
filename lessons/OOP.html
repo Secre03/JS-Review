@@ -8,9 +8,91 @@
 <body>
     <script>
 
-      // class Hero = {
-        
-      // }
+      class Car {
+        brand;
+        model;
+        speed = 0;
+        isTrunkOpen;
+
+        constructor(brand, model, speed, isTrunkOpen){
+          this.brand = brand;
+          this.model = model;
+          this.speed = speed;
+          this.isTrunkOpen = isTrunkOpen
+        }
+
+        displayInfo(){
+          console.log(`${this.brand} ${this.model} Speed: ${this.speed} Trunk: ${this.isTrunkOpen ? 'open' : 'closed'}`)
+        }
+
+        go(){
+          if(this.isTrunkOpen){
+            console.log(`The trunk is open close it to make the ${this.brand} car go`);
+          }else{
+            this.speed += 5
+            if(this.speed > 200) this.speed = 200;
+          }
+        }
+
+        break(){
+          this.speed -= 5;
+          if(this.speed < 0) this.speed = 0;
+        }
+        openTrunk(){
+          this.isTrunkOpen = true;
+        }
+        closeTrunk(){
+          this.isTrunkOpen = false
+        }
+      }
+
+      class RaceCar extends Car {
+        acceleration;
+        constructor(brand, model, speed, isTrunkOpen, acceleration){
+          super(brand, model, false, speed);
+          this.acceleration = acceleration;
+        }
+        displayInfo(){
+          console.log(`${this.brand} ${this.model} Total Speed: ${this.speed} Acceleration: ${this.acceleration}`)
+        }
+        go(){
+          this.speed += this.acceleration;
+          if(this.speed > 300) return this.speed = 300
+        }
+        openTrunk(){
+          this.isTrunkOpen = false;
+        }
+        closeTrunk(){
+          this.isTrunkOpen = false;
+        }
+
+      }
+
+      const car1 = new Car('Toyota', 'Corolla', 192, false);
+      const car2 = new Car('Tesla', 'Model 3', 10, true);
+
+      const car3 = new RaceCar('McLaren', 'F1', 20, 40);
+   
+      
+    car1.openTrunk();
+    car1.closeTrunk();
+    car1.go();
+    
+
+    car2.openTrunk();
+    car2.go();
+
+    car3.go();
+
+
+    //display the info
+    car1.displayInfo();
+    car2.displayInfo();
+    car3.displayInfo();
+  
+
+    
+
 
     </script>
 </body>
