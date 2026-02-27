@@ -6,8 +6,7 @@
   <title>OOP exercise</title>
 </head>
 <body>
-    <script>
-
+    <!-- <script>
         class Car {
           #brand;
           #model;
@@ -97,11 +96,49 @@
     car1.displayInfo();
     car2.displayInfo();
     car3.displayInfo();
-  
 
-    
+
+    </script> -->
+
+    <script>
+      class Student {
+        #name;
+        #age;
+        score;
+
+        constructor(name, age){
+          this.name = name;
+          this.age = age;
+          this.score = [];
+        }
+        addScore(score){
+          this.score.push(score);
+        }
+       
+        calculateAvg(){
+          let total = 0;
+          for(let i = 0; i<this.score.length; i++){
+            total += this.score[i];
+          }
+          return total / this.score.length;
+        }
+
+         viewStudent(){
+          console.log(`Name: ${this.name} Age: ${this.age} Score: ${this.score} Total: ${this.calculateAvg()}`)
+        }
+        clearScore(){
+          this.score = [];
+        }
+      }
+      const student  = new Student("Gusion", 12);
+      student.addScore(87);
+      student.addScore(90);
+
+      student.viewStudent();
 
 
     </script>
-</body>
+
+
+  </body>
 </html>
