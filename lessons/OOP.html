@@ -8,26 +8,34 @@
 <body>
     <script>
 
-      class Car {
-        brand;
-        model;
-        speed = 0;
-        isTrunkOpen;
+        class Car {
+          #brand;
+          #model;
+          speed = 0;
+          isTrunkOpen;
 
-        constructor(brand, model, speed, isTrunkOpen){
-          this.brand = brand;
-          this.model = model;
-          this.speed = speed;
-          this.isTrunkOpen = isTrunkOpen
-        }
+          constructor(brand, model, speed, isTrunkOpen){
+            this.#brand = brand;
+            this.#model = model;
+            this.speed = speed;
+            this.isTrunkOpen = isTrunkOpen
+          }
+
+          //getters
+          getModel(){
+            return this.#model
+          }
+          getBrand(){
+            return this.#brand
+          }
 
         displayInfo(){
-          console.log(`${this.brand} ${this.model} Speed: ${this.speed} Trunk: ${this.isTrunkOpen ? 'open' : 'closed'}`)
+          console.log(`${this.#brand} ${this.#model} Speed: ${this.speed} Trunk: ${this.isTrunkOpen ? 'open' : 'closed'}`)
         }
 
         go(){
           if(this.isTrunkOpen){
-            console.log(`The trunk is open close it to make the ${this.brand} car go`);
+            console.log(`The trunk is open close it to make the ${this.#brand} car go`);
           }else{
             this.speed += 5
             if(this.speed > 200) this.speed = 200;
@@ -48,12 +56,12 @@
 
       class RaceCar extends Car {
         acceleration;
-        constructor(brand, model, speed, isTrunkOpen, acceleration){
-          super(brand, model, false, speed);
+        constructor(brand, model, speed, acceleration, isTrunkOpen){
+          super(brand, model, speed, isTrunkOpen);
           this.acceleration = acceleration;
         }
         displayInfo(){
-          console.log(`${this.brand} ${this.model} Total Speed: ${this.speed} Acceleration: ${this.acceleration}`)
+          console.log(`${this.getBrand()} ${this.getModel()} Total Speed: ${this.speed} Acceleration: ${this.acceleration}`)
         }
         go(){
           this.speed += this.acceleration;

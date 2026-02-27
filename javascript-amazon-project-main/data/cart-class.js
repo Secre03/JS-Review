@@ -2,7 +2,7 @@ import updateCartQuantity from "../utils/updateQuantity.js";
 
 //class is a better way to generate an objects in OOP
 
-class Cart {
+export class Cart {
    cartItems;
    #localStorageKey; // if the property have hash on the beginning its called private property it can only be access
    //inside the class
