@@ -100,7 +100,7 @@
 
     </script> -->
 
-    <script>
+    <!-- <script>
       class Student {
         #name;
         #age;
@@ -136,6 +136,100 @@
 
       student.viewStudent();
 
+
+    </script> -->
+
+    <!-- <script>
+      class Book{
+        title;
+        author;
+        pages;
+
+        constructor(title, author, pages){
+          this.title = title;
+          this.author = author;
+          this.pages = pages;
+        }
+        displayInfo(){
+          console.log(`Title: ${this.title} Author: ${this.author} Pages: ${this.pages}`)
+        }
+      }
+
+      const book = new Book("Harry Potter", "J.k", 500);
+      console.log(book);
+      book.displayInfo();
+
+    </script> -->
+
+    <script>
+
+      class BankAccounts {
+        #balance;
+
+        constructor(owner){
+          this.owner = owner;
+          // this.#balance = balance;
+          this.transaction = [];
+        }
+      
+        get balance(){ //getters allows you to display the private property outside the class
+          return this.#balance
+        }
+
+        set balance(amount){ // setter alows you to update the private property outside a class using a parameter no return
+          if(typeof amount === 'number' && amount >= 0){
+            this.#balance = amount;
+          }else{
+            console.log('Invalid');
+          }
+        }
+
+       deposit(amount){
+        if(amount <= 0) return 'deposit should be possitive';
+        this.#balance += amount;
+        this.transaction.push({
+          type: 'deposit',
+          amount: `${amount}`
+        })
+       }
+       withdraw(amount){
+       if(amount <= 0) return 'witdraw should be possitive';
+      
+       if(this.#balance < amount){
+        return 'Not enough balance';
+       }else{
+        this.#balance -= amount;
+        this.transaction.push({
+          type: 'withdraw',
+          amount: `${amount}`
+        })
+       }
+        
+       }
+        displayInfo(){
+          console.log(`Owner: ${this.owner}`)
+          console.log(`Balance: ${this.#balance}`)
+          
+          this.transaction.forEach(transaction => {
+            console.log(`Transaction History - ${transaction.type}: ${transaction.amount}`)
+          })
+        }
+      }
+
+      const bank = new BankAccounts("Gusion");
+      bank.balance = 1000; // setter
+
+
+      bank.deposit(200);
+      bank.withdraw(300);
+
+      bank.displayInfo();
+
+      const bank2 = new BankAccounts("Miya", 400);
+      bank2.deposit(200);
+      bank2.withdraw(300);
+
+      bank2.displayInfo();
 
     </script>
 
