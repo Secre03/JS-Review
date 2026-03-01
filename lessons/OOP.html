@@ -165,15 +165,18 @@
 
       class BankAccounts {
         #balance;
-
+        #transaction = [];
+        
         constructor(owner){
           this.owner = owner;
-          // this.#balance = balance;
-          this.transaction = [];
         }
       
         get balance(){ //getters allows you to display the private property outside the class
           return this.#balance
+        }
+
+        get transaction(){
+          return[...this.#transaction]; //return the copy of original array
         }
 
         set balance(amount){ // setter alows you to update the private property outside a class using a parameter no return
@@ -187,7 +190,7 @@
        deposit(amount){
         if(amount <= 0) return 'deposit should be possitive';
         this.#balance += amount;
-        this.transaction.push({
+        this.#transaction.push({
           type: 'deposit',
           amount: `${amount}`
         })
@@ -199,7 +202,7 @@
         return 'Not enough balance';
        }else{
         this.#balance -= amount;
-        this.transaction.push({
+        this.#transaction.push({
           type: 'withdraw',
           amount: `${amount}`
         })
@@ -210,7 +213,7 @@
           console.log(`Owner: ${this.owner}`)
           console.log(`Balance: ${this.#balance}`)
           
-          this.transaction.forEach(transaction => {
+          this.#transaction.forEach(transaction => {
             console.log(`Transaction History - ${transaction.type}: ${transaction.amount}`)
           })
         }
@@ -218,14 +221,19 @@
 
       const bank = new BankAccounts("Gusion");
       bank.balance = 1000; // setter
-
+      
 
       bank.deposit(200);
       bank.withdraw(300);
 
+      console.log(bank.transaction);
+
       bank.displayInfo();
 
-      const bank2 = new BankAccounts("Miya", 400);
+
+
+      const bank2 = new BankAccounts("Miya");
+      bank2.balance = 400;
       bank2.deposit(200);
       bank2.withdraw(300);
 
