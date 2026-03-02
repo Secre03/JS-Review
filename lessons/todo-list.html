@@ -175,14 +175,18 @@
             let toggle = true;
            
             updateBtn.addEventListener('click',() => {
+                
                 const taskBox = updateBtn.closest('.taskBox');
                 const updateTask = taskBox.querySelector('.update-task-js');
                 const updateDate = taskBox.querySelector('.update-date-js');
+                
                if(toggle){
+                updateBtn.innerHTML = 'Saved';
                 updateTask.classList.remove('update-task');
                 updateDate.classList.remove('update-date');
                 toggle = false
                }else{
+                
                 const newTask = updateTask.value;
                 const newDate = updateDate.value;
                 
