@@ -179,6 +179,8 @@
           return[...this.#transaction]; //return the copy of original array
         }
 
+
+
         set balance(amount){ // setter alows you to update the private property outside a class using a parameter no return
           if(typeof amount === 'number' && amount >= 0){
             this.#balance = amount;
@@ -187,37 +189,86 @@
           }
         }
 
-       deposit(amount){
+        
+       deposit(amount, type = 'deposit'){
         if(amount <= 0) return 'deposit should be possitive';
         this.#balance += amount;
         this.#transaction.push({
-          type: 'deposit',
-          amount: `${amount}`
+          type: type,
+          amount: amount
         })
        }
-       withdraw(amount){
+
+
+       withdraw(amount, type = 'withdraw'){
        if(amount <= 0) return 'witdraw should be possitive';
       
-       if(this.#balance < amount){
-        return 'Not enough balance';
-       }else{
-        this.#balance -= amount;
-        this.#transaction.push({
-          type: 'withdraw',
-          amount: `${amount}`
-        })
-       }
-        
+        if(this.#balance < amount){
+          return 'Not enough balance';
+        }else{
+          this.#balance -= amount;
+          this.#transaction.push({
+            type: type,
+            amount: amount
+          })
+        }
        }
         displayInfo(){
           console.log(`Owner: ${this.owner}`)
-          console.log(`Balance: ${this.#balance}`)
+          console.log(`Balance: ${this.#balance}`);
           
           this.#transaction.forEach(transaction => {
             console.log(`Transaction History - ${transaction.type}: ${transaction.amount}`)
           })
         }
       }
+
+      class SavingsAcount extends BankAccounts {
+
+        #interestRate;
+
+        constructor(owner, interestRate){
+          super(owner);
+          this.#interestRate = interestRate;
+        }
+
+        get interestRate(){
+          return this.#interestRate;
+        }
+
+        set interest(amount){
+          if(amount <= 0) {
+            console.log('The amount should be positive');
+            return
+          }
+          this.#interestRate = amount;
+        }
+
+
+        addInterest(){
+          const interest = this.balance * (this.#interestRate / 100);
+
+          this.deposit(interest, 'interest');
+          this.displayInfo();
+        }
+        withdraw(amount){
+          const fee = 5;
+          console.log('Witdrawing from savings acount');
+          super.withdraw(fee, 'Saving Fee');
+          super.withdraw(amount, 'withdrawal');
+        }
+
+      }
+
+      const savings = new SavingsAcount("Moscov");
+      savings.balance = 2;
+      savings.interest = 1;
+      savings.deposit(300);
+      savings.withdraw(200);
+
+      savings.addInterest();
+
+      // console.log(savings.balance);
 
       const bank = new BankAccounts("Gusion");
       bank.balance = 1000; // setter
@@ -226,7 +277,7 @@
       bank.deposit(200);
       bank.withdraw(300);
 
-      console.log(bank.transaction);
+      // console.log(bank.transaction);
 
       bank.displayInfo();
 
